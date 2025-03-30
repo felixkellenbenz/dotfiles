@@ -6,6 +6,11 @@ vim.cmd("set shiftwidth=2")
 
 vim.g.mapleader = " "
 
+vim.opt.termguicolors=false
+vim.opt.number=true
+vim.opt.relativenumber=true
+
+-- lazy --
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   local lazyrepo = "https://github.com/folke/lazy.nvim.git"
@@ -20,39 +25,8 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
     os.exit(1)
   end
 end
+
 vim.opt.rtp:prepend(lazypath)
 
-
--- plugins
-
-local treesitterConfig = function() 
-  local configs = require("nvim-treesitter.configs") 
-  
-  configs.setup({
-    ensure_installed = {"c", "cpp", "lua", "vim", "haskell"},
-    highlight = { enable = true }
-  })
-end
-
-local plugins = {
-  { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
-  { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate", config = treesitterConfig },
-  { 'nvim-telescope/telescope.nvim', tag = '0.1.8', dependencies = { 'nvim-lua/plenary.nvim' } } 
-}
-local opts = {}
-
-require("lazy").setup(plugins, opts)
-
-require("catppuccin").setup()
-
--- colorscheme
-
-vim.cmd.colorscheme "catppuccin"
-
-
--- keymaps
-
-local telescopeBuiltin = require("telescope.builtin")
-
-vim.keymap.set('n', '<C-f>', telescopeBuiltin.find_files, {})
-vim.keymap.set('n', '<leader>fg', telescopeBuiltin.live_grep, {})
+-- setup lazy --
+require("lazy").setup("plugins")
