@@ -47,13 +47,6 @@
 ;;Useful for configuring built-in emacs features.
 (use-package emacs :ensure nil :config (setq ring-bell-function #'ignore))
 
-;;When installing a package used in the init file itself,
-;;e.g. a package which adds a use-package key word,
-;;use the :wait recipe keyword to block until that package is installed/configured.
-;;For example:
-;;(use-package general :ensure (:wait t) :demand t)
-
-;; Expands to: (elpaca evil (use-package evil :demand t))
 (use-package evil
   :ensure t
   :demand t
@@ -74,3 +67,17 @@
   :font "Iosevka"
   :height 140
   :weight 'medium)
+
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(package-initialize)
+
+(use-package catppuccin-theme
+    :ensure t
+    :demand t
+    :config
+    (load-theme 'catppuccin :no-confirm))
+
+(menu-bar-mode -1)
+(scroll-bar-mode -1)
+(tool-bar-mode -1)
