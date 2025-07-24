@@ -67,13 +67,31 @@
   (setq company-idle-delay 0)
   (setq company-minimum-prefix-length 1))
 
+(add-hook 'after-init-hook 'global-company-mode)
+
 (with-eval-after-load 'company
   (define-key company-active-map (kbd "M-n") nil)
   (define-key company-active-map (kbd "M-p") nil)
   (define-key company-active-map (kbd "C-p") #'company-select-next)
   (define-key company-active-map (kbd "C-p") #'company-select-previous))			
 
+;; lsp-mode
 
+(use-package lsp-ui
+  :init
+  (setq lsp-ui-code-doc-enable t)
+  (setq lsp-ui-sideline-enable t)
+  )
+
+(use-package lsp-mode
+  :init
+  (setq lsp-headerline-breadcrumb-enable nil)
+  :hook(
+		(c-mode . lsp)
+		(c++-mode . lsp)
+		)
+  :commands lsp)
+  
 
 
 
@@ -92,7 +110,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages '(evil zenburn-theme))
+ '(package-selected-packages nil)
  '(warning-suppress-types '((native-compiler) (native-compiler))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
