@@ -1,4 +1,3 @@
-
 (setq inhibit-startup-message t)
 
 ;; Disable scroll bar, tool bar and menu bar
@@ -7,7 +6,7 @@
 (tooltip-mode -1)
 (menu-bar-mode -1)
 
-(set-fringe-mode 10)
+(set-fringe-mode 0)
 
 (setq visible-bell t)
 
@@ -21,7 +20,7 @@
 ;; Set faces
 (set-face-attribute 'default nil
   :font "Iosevka"
-  :height 150
+  :height 140
   :weight 'light)
 
 ;; Had to enable the italic attribute manually (not sure why)
@@ -49,10 +48,16 @@
   :config
   (setq explicit-shell-file-name "bash"))
 
-;; theme
-(use-package zenburn-theme
+;; themes
+(use-package zenburn-theme)
+
+(use-package monokai-theme)
+
+(use-package gruber-darker-theme)
+
+(use-package modus-themes
   :config
-  (load-theme 'zenburn t))
+  (load-theme 'modus-vivendi-tinted t))
 
 ;; evil-mode
 (use-package evil
@@ -62,6 +67,7 @@
   (evil-mode 1))
 
 ;; company-mode
+;; TODO: bind space for ignoring highlighting
 (use-package company
   :config
   (setq company-idle-delay 0)
@@ -75,14 +81,16 @@
   (define-key company-active-map (kbd "C-p") #'company-select-next)
   (define-key company-active-map (kbd "C-p") #'company-select-previous))			
 
-;; lsp-mode
 
+;; lsp-ui
+;; How to make better use of this ?
 (use-package lsp-ui
   :init
   (setq lsp-ui-code-doc-enable t)
   (setq lsp-ui-sideline-enable t)
   )
 
+;; lsp mode
 (use-package lsp-mode
   :init
   (setq lsp-headerline-breadcrumb-enable nil)
@@ -92,8 +100,21 @@
 		)
   :commands lsp)
   
+;; Modeline
 
-
+(setq-default mode-line-format
+  '("%e"
+	mode-line-front-space	
+	" "
+	mode-line-modified
+	" "
+    mode-line-buffer-identification
+	mode-line-position
+	" "
+	vc-mode
+	" "
+	mode-name
+	mode-line-end-spaces))
 
 
 
@@ -110,8 +131,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages nil)
- '(warning-suppress-types '((native-compiler) (native-compiler))))
+ )
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
