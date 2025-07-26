@@ -71,21 +71,19 @@
 (use-package company
   :config
   (setq company-idle-delay 0)
-  (setq company-minimum-prefix-length 1))
-
-(add-hook 'after-init-hook 'global-company-mode)
-
-(with-eval-after-load 'company
+  (setq company-minimum-prefix-length 1)
+  (define-key company-active-map (kbd "SPC") #'company-abort)
   (define-key company-active-map (kbd "M-n") nil)
   (define-key company-active-map (kbd "M-p") nil)
   (define-key company-active-map (kbd "C-p") #'company-select-next)
-  (define-key company-active-map (kbd "C-p") #'company-select-previous))			
+  (define-key company-active-map (kbd "C-p") #'company-select-previous))
 
+(add-hook 'after-init-hook 'global-company-mode)
 
 ;; lsp-ui
 ;; How to make better use of this ?
 (use-package lsp-ui
-  :init
+  :config
   (setq lsp-ui-code-doc-enable t)
   (setq lsp-ui-sideline-enable t)
   )
@@ -101,7 +99,6 @@
   :commands lsp)
   
 ;; Modeline
-
 (setq-default mode-line-format
   '("%e"
 	mode-line-front-space	
@@ -116,12 +113,18 @@
 	mode-name
 	mode-line-end-spaces))
 
+;; Nerd-Icons
+(use-package nerd-icons)
 
-
-
-
-
-
+;; Emacs Dashboard
+(use-package dashboard
+  :config
+  (dashboard-setup-startup-hook)
+  (setq dashboard-display-icons-p t)
+  (setq dashboard-icon-type 'nerd-icons)
+  (setq dashboard-set-heading-icons t)
+  (setq dashboard-set-file-icons t)
+  (setq dashboard-startup-banner 'logo))
 
 
 
@@ -131,7 +134,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+)
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
