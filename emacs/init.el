@@ -33,6 +33,7 @@
 
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
                          ("org" . "https://orgmode.org/elpa/")
+						 ("melpa-stable" . "https://stable.melpa.org/packages/")
                          ("elpa" . "https://elpa.gnu.org/packages/")))
 
 (package-initialize)
@@ -64,7 +65,8 @@
   :init
   (setq evil-want-C-u-scroll t)
   :config
-  (evil-mode 1))
+  (evil-mode 1)
+  (evil-define-key 'normal org-mode-map (kbd "<tab>") #'org-cycle))
 
 ;; company-mode
 ;; TODO: bind space for ignoring highlighting
@@ -84,9 +86,12 @@
 ;; How to make better use of this ?
 (use-package lsp-ui
   :config
-  (setq lsp-ui-code-doc-enable t)
+  (setq lsp-ui-doc-enable t)
+  (setq lsp-ui-doc-position 'at-point)
+  (setq lsp-ui-doc-show-with-cursor t)
   (setq lsp-ui-sideline-enable t)
-  )
+  (setq lsp-ui-sideline-show-diagnostics t)
+  (setq lsp-ui-sideline-update-mode 'line))
 
 ;; lsp mode
 (use-package lsp-mode
@@ -126,6 +131,16 @@
   (setq dashboard-set-file-icons t)
   (setq dashboard-startup-banner 'logo))
 
+;; org-mode
+(use-package org)
+
+(add-hook 'org-mode-hook #'org-indent-mode)
+
+;; org-roam
+(use-package org-roam
+  :config 
+  (setq org-roam-directory (file-truename "~/.org/roam"))
+  (add-hook 'org-mode-hook #'org-roam-db-autosync-mode))
 
 
 
@@ -134,7 +149,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
-)
+ '(package-selected-packages nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
