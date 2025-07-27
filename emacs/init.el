@@ -33,7 +33,6 @@
 
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
                          ("org" . "https://orgmode.org/elpa/")
-						 ("melpa-stable" . "https://stable.melpa.org/packages/")
                          ("elpa" . "https://elpa.gnu.org/packages/")))
 
 (package-initialize)
@@ -69,7 +68,6 @@
   (evil-define-key 'normal org-mode-map (kbd "<tab>") #'org-cycle))
 
 ;; company-mode
-;; TODO: bind space for ignoring highlighting
 (use-package company
   :config
   (setq company-idle-delay 0)
@@ -82,16 +80,11 @@
 
 (add-hook 'after-init-hook 'global-company-mode)
 
-;; lsp-ui
-;; How to make better use of this ?
-(use-package lsp-ui
+;; flycheck
+(use-package flycheck
   :config
-  (setq lsp-ui-doc-enable t)
-  (setq lsp-ui-doc-position 'at-point)
-  (setq lsp-ui-doc-show-with-cursor t)
-  (setq lsp-ui-sideline-enable t)
-  (setq lsp-ui-sideline-show-diagnostics t)
-  (setq lsp-ui-sideline-update-mode 'line))
+  (add-hook 'c-mode-hook #'flycheck-mode)
+  (add-hook 'cpp-mode-hook #'flycheck-mode))
 
 ;; lsp mode
 (use-package lsp-mode
@@ -101,6 +94,14 @@
 		(c-mode . lsp)
 		(c++-mode . lsp)
 		)
+  :config
+  (setq lsp-ui-doc-enable t)
+  (setq lsp-ui-doc-position 'at-point)
+  (setq lsp-ui-doc-show-with-cursor t)
+  (setq lsp-ui-sideline-enable t)
+  (setq lsp-ui-sideline-show-diagnostics t)
+  (setq lsp-ui-sideline-show-code-actions t)
+  (setq lsp-ui-sideline-diagnostic-max-lines 2)
   :commands lsp)
   
 ;; Modeline
