@@ -10,9 +10,11 @@
 
 (setq visible-bell t)
 
+
 ;; Tabs to spaces
 (setq-default indent-tab-mode nil)
 (setq-default tab-width 4)
+
 
 ;; Display line numbers in prog-mode
 (add-hook 'prog-mode-hook #'display-line-numbers-mode)
@@ -48,6 +50,7 @@
   :config
   (setq explicit-shell-file-name "bash"))
 
+
 ;; themes
 (use-package zenburn-theme)
 
@@ -59,6 +62,7 @@
   :config
   (load-theme 'modus-vivendi-tinted t))
 
+
 ;; evil-mode
 (use-package evil
   :init
@@ -67,47 +71,47 @@
   (evil-mode 1)
   (evil-define-key 'normal org-mode-map (kbd "<tab>") #'org-cycle))
 
+
 ;; company-mode
 (use-package company
   :config
-  (setq company-idle-delay 0)
-  (setq company-minimum-prefix-length 1)
+  (setq company-idle-delay 0.5)
+  (setq company-minimum-prefix-length 3)
   (define-key company-active-map (kbd "SPC") #'company-abort)
   (define-key company-active-map (kbd "M-n") nil)
   (define-key company-active-map (kbd "M-p") nil)
   (define-key company-active-map (kbd "C-p") #'company-select-next)
-  (define-key company-active-map (kbd "C-p") #'company-select-previous))
+  (define-key company-active-map (kbd "C-p") #'company-select-previous)
+  :hook
+  (prog-mode . company-mode))
 
-(add-hook 'after-init-hook 'global-company-mode)
 
 ;; flycheck
 (use-package flycheck
   :config
-  (add-hook 'c-mode-hook #'flycheck-mode)
-  (add-hook 'cpp-mode-hook #'flycheck-mode))
+  (add-hook 'prog-mode-hook #'flycheck-mode))
+
 
 ;; lsp mode
 (use-package lsp-mode
   :init
   (setq lsp-headerline-breadcrumb-enable nil)
-  :hook(
-		(c-mode . lsp)
-		(c++-mode . lsp)
-		)
+  :hook
+  (c-mode . lsp)
+  (c++-mode . lsp)
   :config
-  (setq lsp-ui-doc-enable t)
-  (setq lsp-ui-doc-position 'at-point)
-  (setq lsp-ui-doc-show-with-cursor t)
+  (setq lsp-eldoc-enable-hover t)
   (setq lsp-ui-sideline-enable t)
   (setq lsp-ui-sideline-show-diagnostics t)
   (setq lsp-ui-sideline-show-code-actions t)
-  (setq lsp-ui-sideline-diagnostic-max-lines 2)
+  (setq lsp-ui-sideline-diagnostic-max-lines 1)
   :commands lsp)
   
+
 ;; Modeline
 (setq-default mode-line-format
   '("%e"
-	mode-line-front-space	
+	mode-line-front-space
 	" "
 	mode-line-modified
 	" "
@@ -119,8 +123,10 @@
 	mode-name
 	mode-line-end-spaces))
 
+
 ;; Nerd-Icons
 (use-package nerd-icons)
+
 
 ;; Emacs Dashboard
 (use-package dashboard
@@ -132,10 +138,12 @@
   (setq dashboard-set-file-icons t)
   (setq dashboard-startup-banner 'logo))
 
+
 ;; org-mode
 (use-package org)
 
 (add-hook 'org-mode-hook #'org-indent-mode)
+
 
 ;; org-roam
 (use-package org-roam
@@ -143,13 +151,12 @@
   (setq org-roam-directory (file-truename "~/.org/roam"))
   (add-hook 'org-mode-hook #'org-roam-db-autosync-mode))
 
-
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(lsp-clients-clangd-args '("--header-insertion-decorators=0"))
  '(package-selected-packages nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
