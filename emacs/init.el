@@ -14,6 +14,7 @@
 ;; Tabs to spaces
 (setq-default indent-tab-mode nil)
 (setq-default tab-width 4)
+(defvaralias 'c-basic-offset 'tab-width)
 
 
 ;; Display line numbers in prog-mode
@@ -23,12 +24,13 @@
 (set-face-attribute 'default nil
   :font "Iosevka"
   :height 140
-  :weight 'light)
+  :weight 'medium)
 
 ;; Had to enable the italic attribute manually (not sure why)
 ;; -> use M-x list-face-display and navigate to font-lock-comment-face
 (set-face-attribute 'font-lock-comment-face nil
    :slant 'italic)
+
 
 ;; Initialize package sources
 (require 'package)
@@ -116,6 +118,7 @@
 	mode-line-modified
 	" "
     mode-line-buffer-identification
+	" "
 	mode-line-position
 	" "
 	vc-mode
@@ -150,6 +153,7 @@
   :config 
   (setq org-roam-directory (file-truename "~/.org/roam"))
   (add-hook 'org-mode-hook #'org-roam-db-autosync-mode))
+
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
