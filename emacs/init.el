@@ -60,10 +60,11 @@
 
 (use-package gruber-darker-theme)
 
-(use-package modus-themes
-  :config
-  (load-theme 'modus-vivendi-tinted t))
+(use-package modus-themes)
 
+(use-package nord-theme
+  :config
+  (load-theme 'nord t))
 
 ;; evil-mode
 (use-package evil
@@ -110,25 +111,28 @@
   :commands lsp)
   
 
-;; Modeline
-(setq-default mode-line-format
-  '("%e"
-	mode-line-front-space
-	" "
-	mode-line-modified
-	" "
-    mode-line-buffer-identification
-	" "
-	mode-line-position
-	" "
-	vc-mode
-	" "
-	mode-name
-	mode-line-end-spaces))
-
-
 ;; Nerd-Icons
 (use-package nerd-icons)
+
+
+;; Modeline
+;;(setq-default mode-line-format
+;;  '("%e"
+;;	mode-line-front-space
+;;	" "
+;;	mode-line-modified
+;;	" "
+;;  mode-line-buffer-identification
+;;	" "
+;;	mode-line-position
+;;	" "
+;;	vc-mode
+;;	" "
+;;	mode-name
+;;	mode-line-end-spaces))
+
+(use-package doom-modeline
+  :init (doom-modeline-mode 1))
 
 
 ;; Emacs Dashboard
@@ -161,7 +165,12 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(lsp-clients-clangd-args '("--header-insertion-decorators=0"))
- '(package-selected-packages nil))
+ '(org-agenda-files '("/home/felixkellenbenz/.org/tasks/agenda.org"))
+ '(package-selected-packages
+   '(all-the-icons company dashboard doom-modeline evil flycheck
+				   gruber-darker-theme lsp-ui modus-themes
+				   monokai-theme nerd-icons-completion nord-theme
+				   org-roam zenburn-theme)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
